@@ -7,16 +7,69 @@
     <script src="jquery-jvectormap-2.0.3.min.js"></script>
     <script src="jquery-jvectormap-world-mill.js"></script>
     <link href="jquery-jvectormap-2.0.3.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <!--<script src="jquery.min.js"></script>-->
 </head>
 <body>
-<div id="my-map" style="position: absolute;top: 0;left: 0;right: 0;bottom: 0"></div>
+<div id="my-map" ></div>
+<div class="bottom-left ">
+    <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+</div>
+<div class="bottom-right">
+    <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+</div>
 </body>
 <script>
     $(function () {
         $("#my-map").vectorMap({
-            map:"world_mill"
+            map:"world_mill",
+            backgroundColor:"#00597c",
+            regionStyle:{
+                initial: {
+                    fill: '#000',
+                    "fill-opacity":0.5,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                },
+                hover: {
+                    "fill-opacity": 0.8
+                },
+                selected: {
+                    fill: 'yellow'
+                },
+                selectedHover: {
+                }
+            },
+            markers: [
+               /* {latLng: [34.74, 113.66], name: '河南 - 郑州  2010,2011,2012'},
+                {latLng: [39.95, 116.34], name: '北京  2013'},
+                {latLng: [38.97, 121.53], name: '辽宁 - 大连  2010-2014'},
+                {latLng: [29.88, 121.64], name: '浙江 - 宁波  2014.04'},*/
+            ]
+            ,
+
         });
+        var vm = $('#my-map').vectorMap('get', 'mapObject');
+        console.log(vm);
+        function blinkPoints(){
+            vm.removeAllMarkers();
+            setTimeout( vm.addMarkers(
+                [{latLng: [34.74, 113.66], name: '河南 - 郑州  2010,2011,2012'},
+                    {latLng: [39.95, 116.34], name: '北京  2013'},
+                    {latLng: [38.97, 121.53], name: '辽宁 - 大连  2010-2014'},
+                    {latLng: [29.88, 121.64], name: '浙江 - 宁波  2014.04'},]
+            ),200)
+
+
+        }
+        setInterval(blinkPoints,1000)
     });
 </script>
 </html>

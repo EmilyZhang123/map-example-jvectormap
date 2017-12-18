@@ -1,0 +1,72 @@
+<div id="loading_for_{{ id }}">
+    <img class="loading-image" src="/static/common/image/loading.gif" />
+</div>
+<div id="content_for_{{ id }}" style="display: none;">
+    <div id="{{ id }}" style="{{ style }}"></div>
+</div>
+<script>
+    {% load jsonify %}
+    $(function(){
+        ajax("{{ url }}", function(geo_data){
+            var INIT_RADIUS = 2;
+            var MAX_RADIUS = 15;
+            var INIT_OPACITY = 1;
+            var STROKE_WIDTH = 5;
+            var RADIUS_INCREAMENT_PER_TICK = 1;
+            var OPACITY_DECREAMENT_PER_TICK = 0.1;
+            geo_data.forEach(function(item){
+                var lifetime = MAX_RADIUS - INIT_RADIUS;
+                var current = Math.floor(lifetime * Math.random());
+                item.radius = INIT_RADIUS + current * RADIUS_INCREAMENT_PER_TICK;
+                item.opacity = INIT_OPACITY - current * OPACITY_DECREAMENT_PER_TICK;
+            });
+            var counter = 0;
+            $("#loading_for_{{ id }}").hide();
+            $("#content_for_{{ id }}").show();
+            $("#{{ id }}").vectorMap({
+                map: "world_mill",
+                markerStyle: {
+                    initial: {
+                        fill: '#F8E23B',
+                        stroke: '#383f47',
+                    },
+                },
+                markers: [],
+                zoomOnScroll: false,
+                zoomMax: 1,
+                zoomButtons: false,
+                backgroundColor: "transparent",
+            });
+            var vm = $('#{{ id }}').vectorMap('get', 'mapObject');
+            console.log(vm);
+            function blinkPoints(){
+                counter++;
+                vm.removeAllMarkers();
+                geo_data.forEach(function(item){
+                    item.radius += RADIUS_INCREAMENT_PER_TICK;
+                    item.opacity -= OPACITY_DECREAMENT_PER_TICK;
+                    if(item.radius > MAX_RADIUS){
+                        item.radius = INIT_RADIUS;
+                        item.opacity = INIT_OPACITY;
+                    }
+                });
+                var markers = geo_data.map(function(item){
+                    return {
+                        latLng: item.latLng,
+                        style: {
+                            fill: "transparent",
+                            stroke: "#FF0000",
+                            'stroke-width': STROKE_WIDTH,
+                            'stroke-opacity': item.opacity,
+                            r: item.radius,
+                        },
+                    };
+                });
+                vm.addMarkers(markers);
+                setTimeout(blinkPoints, 100);
+            }
+            setTimeout(blinkPoints, 100);
+        });
+    });
+</script>
+

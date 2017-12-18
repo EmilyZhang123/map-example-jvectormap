@@ -1,0 +1,50 @@
+#my-map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #0f0f0f;
+    z-index: -1;
+}
+.bottom-left{
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     height: 200px;
+     width: 600px;
+     background-color: #000000;
+     opacity: 0.5;
+    z-index: 1;
+    color: #54531f;
+}
+.bottom-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 200px;
+    width: 600px;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 1;
+    color: #6c6605;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.fadeInUp {
+    animation-name: fadeInUp;
+}
