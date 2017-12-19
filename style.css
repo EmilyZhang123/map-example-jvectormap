@@ -7,6 +7,18 @@
     color: #0f0f0f;
     z-index: -1;
 }
+@media only screen and (min-width: 1200px) {
+
+}
+.bottom-box{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    bottom: 0;
+    left: 0;
+    min-width: 1205px;
+    overflow-x: auto;
+}
 .bottom-left{
      position: absolute;
      bottom: 0;

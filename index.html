@@ -12,24 +12,29 @@
 </head>
 <body>
 <div id="my-map" ></div>
-<div class="bottom-left ">
-    <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
+<div class="bottom-box">
+    <div class="bottom-left ">
+        <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+        <div>aaaxsxjnhbjnsbjnmz jakm</div>
+        <div>aaaxsxjnhbjnsbjnmz jakm</div>
+        <div>aaaxsxjnhbjnsbjnmz jakm</div>
+    </div>
+    <div class="bottom-right">
+        <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+        <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+        <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+        <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
+    </div>
 </div>
-<div class="bottom-right">
-    <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
-    <div>aaaxsxjnhbjnsbjnmz jakm</div>
-</div>
+
 </body>
 <script>
     $(function () {
         $("#my-map").vectorMap({
             map:"world_mill",
             backgroundColor:"#00597c",
+            zoomButtons:false,
+            zoomMax:1,
             regionStyle:{
                 initial: {
                     fill: '#000',
@@ -47,29 +52,114 @@
                 selectedHover: {
                 }
             },
-            markers: [
-               /* {latLng: [34.74, 113.66], name: '河南 - 郑州  2010,2011,2012'},
-                {latLng: [39.95, 116.34], name: '北京  2013'},
-                {latLng: [38.97, 121.53], name: '辽宁 - 大连  2010-2014'},
-                {latLng: [29.88, 121.64], name: '浙江 - 宁波  2014.04'},*/
-            ]
+            onRegionOver: function (event, label, code) {
+                // label.css('display','none');
+                // event.preventDefault();
+                // console.log(e)
+                // console.log('456');
+            },
+            onMarkerOver: function(event, label, code) {
+                event.preventDefault();
+            },
+            onMarkerTipShow: function(event, tip, code) {
+                event.preventDefault();
+
+            },
+            markers: []
             ,
 
+        });
+        var markers_array=     [
+            {
+                latLng: [34.74, 113.66],
+                style:{
+                    fill:"#fff",
+                    r:2
+                }
+            },
+            {
+                latLng: [39.95, 116.34],
+                style:{
+                    fill:"#fff",
+                    r:6
+                }
+            },
+            {
+                latLng: [38.97, 121.53],
+
+                style:{
+                    fill:"#fff",
+                    r:8
+                }
+            },
+            {
+                latLng: [29.88, 121.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [24.88, 127.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [13.88, 21.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [9.88, 12.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+        ];
+        var INIT_RADIUS = 2;
+        var MAX_RADIUS = 10;
+        var INIT_OPACITY = 1;
+        var STROKE_WIDTH = 5;
+        var RADIUS_INCREAMENT_PER_TICK = 1;
+        var OPACITY_DECREAMENT_PER_TICK = 0.1;
+        markers_array.forEach(function (item) {
+            var lifetime = MAX_RADIUS - INIT_RADIUS;
+            var current = Math.floor(lifetime * Math.random());
+            item.radius = INIT_RADIUS + current * RADIUS_INCREAMENT_PER_TICK;
+            item.opacity = INIT_OPACITY - current * OPACITY_DECREAMENT_PER_TICK;
         });
         var vm = $('#my-map').vectorMap('get', 'mapObject');
         console.log(vm);
         function blinkPoints(){
             vm.removeAllMarkers();
-            setTimeout( vm.addMarkers(
-                [{latLng: [34.74, 113.66], name: '河南 - 郑州  2010,2011,2012'},
-                    {latLng: [39.95, 116.34], name: '北京  2013'},
-                    {latLng: [38.97, 121.53], name: '辽宁 - 大连  2010-2014'},
-                    {latLng: [29.88, 121.64], name: '浙江 - 宁波  2014.04'},]
-            ),200)
-
-
+            markers_array.forEach(function (item) {
+                item.radius += RADIUS_INCREAMENT_PER_TICK;
+                item.opacity -= OPACITY_DECREAMENT_PER_TICK;
+                if(item.radius > MAX_RADIUS){
+                    item.radius = INIT_RADIUS;
+                    item.opacity = INIT_OPACITY;
+                }
+            });
+           var markers = markers_array.map(function (item) {
+               return{
+                   latLng:item.latLng,
+                   style: {
+                       fill: "transparent",
+                       stroke: "#FF0000",
+                       'stroke-width': STROKE_WIDTH,
+                       'stroke-opacity': item.opacity,
+                       r: item.radius,
+                   },
+               }
+           });
+            vm.addMarkers(markers);
         }
-        setInterval(blinkPoints,1000)
+        setInterval(blinkPoints,100)
     });
 </script>
 </html>
