@@ -8,9 +8,13 @@
     <script src="jquery-jvectormap-world-mill.js"></script>
     <link href="jquery-jvectormap-2.0.3.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <!--<script src="jquery.min.js"></script>-->
 </head>
 <body>
+<header ></header>
+<div class="threat-block"></div>
+<div class="search-group" >
+    搜索<input size="20" style="background-color: transparent;border: 1px solid #007c60;">
+</div>
 <div id="my-map" ></div>
 <div class="bottom-box">
     <div class="bottom-left ">
@@ -25,11 +29,28 @@
         <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
         <div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>
     </div>
+
+</div>
+<div style="position: absolute;top: 100px;bottom: 100px;left: 0;right: 0;z-index: 3">
+    <canvas id="myCanvas">
+
+    </canvas>
 </div>
 
 </body>
 <script>
     $(function () {
+      var context =document.getElementById('myCanvas').getContext('2d');
+
+        context.beginPath();
+        context.moveTo(120,270);
+        context.quadraticCurveTo(150,10,580,120);
+        context.strokeStyle = "red";
+        context.stroke();
+
+
+
+
         $("#my-map").vectorMap({
             map:"world_mill",
             backgroundColor:"#00597c",
@@ -53,10 +74,7 @@
                 }
             },
             onRegionOver: function (event, label, code) {
-                // label.css('display','none');
-                // event.preventDefault();
-                // console.log(e)
-                // console.log('456');
+
             },
             onMarkerOver: function(event, label, code) {
                 event.preventDefault();
@@ -78,7 +96,7 @@
                 }
             },
             {
-                latLng: [39.95, 116.34],
+                latLng: [10.95, 99.34],
                 style:{
                     fill:"#fff",
                     r:6
@@ -122,10 +140,10 @@
             },
         ];
         var INIT_RADIUS = 2;
-        var MAX_RADIUS = 10;
+        var MAX_RADIUS = 13;
         var INIT_OPACITY = 1;
         var STROKE_WIDTH = 5;
-        var RADIUS_INCREAMENT_PER_TICK = 1;
+        var RADIUS_INCREAMENT_PER_TICK = 0.8;
         var OPACITY_DECREAMENT_PER_TICK = 0.1;
         markers_array.forEach(function (item) {
             var lifetime = MAX_RADIUS - INIT_RADIUS;
