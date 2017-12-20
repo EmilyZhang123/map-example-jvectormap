@@ -9,6 +9,7 @@ header{
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #a6a6a6;
+    /*margin-bottom: 10px;*/
 }
 .threat-block{
     height: 150px;
@@ -21,7 +22,7 @@ header{
     vertical-align: top;
     margin-top:20px ;
     margin-left: 25%;
-    color: #007c60;
+    color: #dddddd;
     /*position: absolute;*/
 }
 #my-map{
