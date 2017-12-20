@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test2</title>
+    <script src="jquery.min.js"></script>
+    <script src="jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="jquery-jvectormap-world-mill.js"></script>
+    <link href="jquery-jvectormap-2.0.3.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<header >I'm Header</header>
+<div class="threat-block">Threat Block</div>
+<div class="search-group" >
+    搜索<input size="20" style="background-color: transparent;border: 1px solid #dddddd;">
+    <button>click</button>
+</div>
+<div id="my-map" ></div>
+<div class="bottom-box">
+    <div class="bottom-left ">
+        <!--<div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>-->
+
+    </div>
+    <div class="bottom-right">
+
+    </div>
+
+</div>
+
+
+</body>
+<script>
+    $(function () {
+        var a=0;
+        var scroll_caption =['sdaadhhjnsbs就搜索就斤斤计较','sjddjjdjdjdjjdjdjd','ssswwdrree3332222ccc','ddwwwwwwwerfcccv','ggbbmxxxxlfkkfkk'];
+        scroll_caption.forEach(function (item) {
+            scroll_($(".bottom-left"),item);
+            // scroll_($(".bottom-right"),item);
+            $(".animated").hide();
+                // setTimeout(scroll_,2000,$(".bottom-left"),item);
+        });
+        var index=0;
+        $(".animated")[index++].style.display = 'block';
+        setInterval(function () {
+            if(index<$(".animated").length){
+                $(".animated")[index++].style.display = 'block';
+            }
+        },1000);
+
+        function scroll_($_selector,item) {
+            // console.log()
+            // $_selector.empty();
+            $_selector.append('<div class="animated fadeInUp">'+item+'</div>')
+
+        }
+
+       // scroll_(scroll_caption,$(".bottom-left"));
+       // setInterval(scroll_,2000,scroll_caption,$(".bottom-left"));
+       // scroll_(scroll_caption,$(".bottom-right"));
+
+        // setInterval(scroll_,2000,scroll_caption,$(".bottom-right"));
+
+
+
+
+        $("#my-map").vectorMap({
+            map:"world_mill",
+            backgroundColor:"#00597c",
+            zoomButtons:false,
+            zoomMax:1,
+            regionStyle:{
+                initial: {
+                    fill: '#000',
+                    "fill-opacity":0.5,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                },
+                hover: {
+                    "fill-opacity": 0.8
+                },
+                selected: {
+                    fill: 'yellow'
+                },
+                selectedHover: {
+                }
+            },
+            onRegionTipShow: function(event, tip, code) {
+                event.preventDefault();
+
+            },
+            onRegionOver: function (event, label, code) {
+                event.preventDefault();
+
+            },
+            onMarkerOver: function(event, label, code) {
+                event.preventDefault();
+            },
+            onMarkerTipShow: function(event, tip, code) {
+                event.preventDefault();
+
+            },
+            markers: [],
+        });
+        var markers_array=     [
+            {
+                latLng: [34.74, 113.66],
+                style:{
+                    fill:"#fff",
+                    r:2
+                }
+            },
+            {
+                latLng: [10.95, 99.34],
+                style:{
+                    fill:"#fff",
+                    r:6
+                }
+            },
+            {
+                latLng: [38.97, 121.53],
+
+                style:{
+                    fill:"#fff",
+                    r:8
+                }
+            },
+            {
+                latLng: [29.88, 121.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [24.88, 127.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [13.88, 21.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+            {
+                latLng: [9.88, 12.64],
+                style:{
+                    fill:"#fff",
+                    r:4
+                }
+            },
+        ];
+        var INIT_RADIUS = 2;
+        var MAX_RADIUS = 13;
+        var INIT_OPACITY = 1;
+        var STROKE_WIDTH = 5;
+        var RADIUS_INCREAMENT_PER_TICK = 0.8;
+        var OPACITY_DECREAMENT_PER_TICK = 0.1;
+        markers_array.forEach(function (item) {
+            var lifetime = MAX_RADIUS - INIT_RADIUS;
+            var current = Math.floor(lifetime * Math.random());
+            item.radius = INIT_RADIUS + current * RADIUS_INCREAMENT_PER_TICK;
+            item.opacity = INIT_OPACITY - current * OPACITY_DECREAMENT_PER_TICK;
+        });
+        var vm = $('#my-map').vectorMap('get', 'mapObject');
+        function blinkPoints(){
+            vm.removeAllMarkers();
+            markers_array.forEach(function (item) {
+                item.radius += RADIUS_INCREAMENT_PER_TICK;
+                item.opacity -= OPACITY_DECREAMENT_PER_TICK;
+                if(item.radius > MAX_RADIUS){
+                    item.radius = INIT_RADIUS;
+                    item.opacity = INIT_OPACITY;
+                }
+            });
+            var markers = markers_array.map(function (item) {
+                return{
+                    latLng:item.latLng,
+                    style: {
+                        fill: "transparent",
+                        stroke: "#FF0000",
+                        'stroke-width': STROKE_WIDTH,
+                        'stroke-opacity': item.opacity,
+                        r: item.radius,
+                    },
+                }
+            });
+            vm.addMarkers(markers);
+        }
+        setInterval(blinkPoints,100)
+    });
+</script>
+</html>
