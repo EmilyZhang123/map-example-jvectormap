@@ -18,50 +18,28 @@
 </div>
 <div id="my-map" ></div>
 <div class="bottom-box">
-    <div class="bottom-left ">
-        <!--<div class="animated fadeInUp">aaaxsxjnhbjnsbjnmz jakm</div>-->
-
-    </div>
-    <div class="bottom-right">
-
-    </div>
-
+    <div class="bottom-left bottom-section"></div>
+    <div class="bottom-middle bottom-section"></div>
+    <div class="bottom-right bottom-section"></div>
 </div>
 
 
 </body>
 <script>
     $(function () {
-        var a=0;
-        var scroll_caption =['sdaadhhjnsbs就搜索就斤斤计较','sjddjjdjdjdjjdjdjd','ssswwdrree3332222ccc','ddwwwwwwwerfcccv','ggbbmxxxxlfkkfkk'];
-        scroll_caption.forEach(function (item) {
-            scroll_($(".bottom-left"),item);
-            // scroll_($(".bottom-right"),item);
-            $(".animated").hide();
-                // setTimeout(scroll_,2000,$(".bottom-left"),item);
-        });
-        var index=0;
-        $(".animated")[index++].style.display = 'block';
-        setInterval(function () {
-            if(index<$(".animated").length){
-                $(".animated")[index++].style.display = 'block';
-            }
-        },1000);
-// test merge
-        function scroll_($_selector,item) {
-            // console.log()
-            // $_selector.empty();
-            $_selector.append('<div class="animated fadeInUp">'+item+'</div>')
-
+        function scroll_($_selector) {
+            $_selector.empty();
+            var ram=Math.random();
+            var scroll_caption =[ram,2*ram,3*ram,4*ram,5*ram,6*ram];
+            scroll_caption.forEach(function (item,index) {
+                if(index<5){
+                    $_selector.append('<div>'+item+'</div>')
+                    // $_selector.append('<div class="animated_fadeIn" >'+item+'</div>')
+                }
+            });
         }
-
-       // scroll_(scroll_caption,$(".bottom-left"));
-       // setInterval(scroll_,2000,scroll_caption,$(".bottom-left"));
-       // scroll_(scroll_caption,$(".bottom-right"));
-
-        // setInterval(scroll_,2000,scroll_caption,$(".bottom-right"));
-
-
+        scroll_($(".bottom-section"));
+        setInterval(scroll_,1000,$(".bottom-section"));
 
 
         $("#my-map").vectorMap({
@@ -88,22 +66,19 @@
             },
             onRegionTipShow: function(event, tip, code) {
                 event.preventDefault();
-
             },
             onRegionOver: function (event, label, code) {
                 event.preventDefault();
-
             },
             onMarkerOver: function(event, label, code) {
                 event.preventDefault();
             },
             onMarkerTipShow: function(event, tip, code) {
                 event.preventDefault();
-
             },
             markers: [],
         });
-        var markers_array=     [
+        var markers_array=[
             {
                 latLng: [34.74, 113.66],
                 style:{
