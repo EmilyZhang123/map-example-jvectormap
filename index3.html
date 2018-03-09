@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="jquery-jvectormap-world-mill.js"></script>
+    <link href="jquery-jvectormap-2.0.3.css" rel="stylesheet">
+</head>
+<style>
+   /* g>image{
+        width: 10px;
+        height: 10px;
+    }*/
+</style>
+<body>
+    <div class="my-map" style="width: 1000px;height: 500px">
+
+    </div>
+</body>
+<script>
+    $(function () {
+
+        var map = new jvm.Map({
+            map: 'world_mill',
+            container: $('.my-map'),
+            markers: [],
+            markerStyle: {
+                initial: {
+                    image: "marker.png",
+                },
+            },
+            regionStyle: {
+                initial: {
+                    'fill-opacity': 1,
+                    stroke: 'none',
+                    'stroke-width': 0,
+                    'stroke-opacity': 1
+                },
+                selected: {
+                    fill: '#fff486',
+                    stroke: 'none',
+                    'stroke-width': 0,
+                },
+            },
+        });
+        map.setSelectedRegions('CN');
+        var mapObj= $('.my-map').vectorMap('get', 'mapObject');
+        mapObj.addMarkers([{latLng: [39.6733703918, 116.5429687500],}]);
+
+       /* function mapData_with_ajax(c) {
+            ajax(c.url,function (data) {
+                map.addMarkers({latLng: data.latLng});
+                map.setSelectedRegions(data.country);
+                var config = {
+                    animate: true,
+                    lat:data.latLng[0],
+                    lng:data.latLng[1],
+                    scale: data.scale
+                };
+                mapObj.setFocus(config);
+            })
+
+        }*/
+       /* function {{ cb_function_name }}(latLng,country) {
+                map.addMarkers({latLng: latLng});
+                map.setSelectedRegions(country);
+                var config = {
+                    animate: true,
+                    lat:atLng[0],
+                    lng:latLng[1],
+                    scale: 3
+                };
+                mapObj.setFocus(config);
+
+        }*/
+       /* function mapData_without_ajax(latLng,country,scale) {
+            map.addMarkers({latLng:latLng});
+            map.setSelectedRegions(country);
+
+            var config = {
+                animate: true,
+                lat:latLng[0],
+                lng:latLng[1],
+                scale: scale
+            };
+            mapObj.setFocus(config);
+        }
+*/
+
+        var config = {
+            animate: true,
+            // region:'US',
+            lat:39.6733703918,
+            lng:116.5429687500,
+            scale: 3
+        };
+        mapObj.setFocus(config);
+    })
+</script>
+</html>
