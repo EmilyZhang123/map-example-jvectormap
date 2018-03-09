@@ -11,7 +11,7 @@
 </head>
 <body>
 <header >I'm Header</header>
-<div class="threat-block">Threat Block</div>
+<div class="threat-block">Threats Block</div>
 <div class="search-group" >
     搜索<input size="20" style="background-color: transparent;border: 1px solid #dddddd;">
     <button>click</button>
@@ -30,7 +30,7 @@
         function scroll_($_selector) {
             $_selector.empty();
             var ram=Math.random();
-            var scroll_caption =[ram,2*ram,3*ram,4*ram,5*ram,6*ram];
+            var scroll_caption =[10*ram,20*ram,30*ram,40*ram,50*ram,60*ram];
             scroll_caption.forEach(function (item,index) {
                 if(index<5){
                     $_selector.append('<div>'+item+'</div>')
